@@ -117,33 +117,27 @@ The paper argues that these explain why action chunking improves behavioral clon
 
 <div class="evaluation-grid">
   <figure>
-    <img src="../assets/act-eval-005.webp" alt="Robot arm evaluation run 005" width="480" height="360">
-    <figcaption>Evaluation run 005</figcaption>
+    <img src="../assets/act-eval-005.webp" alt="Robot arm performing the can placement task" width="480" height="360">
   </figure>
   <figure>
-    <img src="../assets/act-eval-007.webp" alt="Robot arm evaluation run 007" width="480" height="360">
-    <figcaption>Evaluation run 007</figcaption>
+    <img src="../assets/act-eval-007.webp" alt="Robot arm performing the can placement task" width="480" height="360">
   </figure>
   <figure>
-    <img src="../assets/act-eval-008.webp" alt="Robot arm evaluation run 008" width="480" height="360">
-    <figcaption>Evaluation run 008</figcaption>
+    <img src="../assets/act-eval-008.webp" alt="Robot arm performing the can placement task" width="480" height="360">
   </figure>
   <figure>
-    <img src="../assets/act-eval-010.webp" alt="Robot arm evaluation run 010" width="480" height="360">
-    <figcaption>Evaluation run 010</figcaption>
+    <img src="../assets/act-eval-010.webp" alt="Robot arm performing the can placement task" width="480" height="360">
   </figure>
 </div>
 
 ### Unexpected interference
 
 <figure class="evaluation-feature">
-  <img src="../assets/act-eval-006.webp" alt="Robot arm evaluation run 006 with unexpected interference" width="480" height="360">
-  <figcaption>Evaluation run 006</figcaption>
+  <img src="../assets/act-eval-006.webp" alt="Robot arm continuing after unexpected interference" width="480" height="360">
 </figure>
 
 Even with failed pickups and no recovery trajectories in the training data, the policy attempts recovery:
 
 <figure class="evaluation-feature">
-  <img src="../assets/act-eval-70k-001.webp" alt="Robot arm evaluation run 001 attempting recovery after a failed pickup" width="480" height="360">
-  <figcaption>Evaluation run 001 after 70K training steps</figcaption>
+  <img src="../assets/act-eval-70k-001.webp" alt="Robot arm attempting recovery after a failed pickup" width="480" height="360">
 </figure>

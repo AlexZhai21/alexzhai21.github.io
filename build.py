@@ -77,12 +77,13 @@ def shell(*, title: str, description: str, body: str, prefix: str = "", math: bo
         <a href="{prefix}index.html#about">About</a>
         <a href="{prefix}index.html#projects">Recent</a>
         <a href="https://github.com/AlexZhai21" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+        <a href="https://www.linkedin.com/in/alexwzhai/" target="_blank" rel="noopener noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
       </nav>
     </div>
   </header>
   <main id="main">{body}</main>
   <footer class="site-footer">
-    <div class="container footer-inner"><span>Alex Zhai</span><a href="https://github.com/AlexZhai21" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a></div>
+    <div class="container footer-inner"><span>Alex Zhai</span><div class="footer-links"><a href="https://github.com/AlexZhai21" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a><a href="https://www.linkedin.com/in/alexwzhai/" target="_blank" rel="noopener noreferrer">LinkedIn <span aria-hidden="true">↗</span></a></div></div>
   </footer>
 </body>
 </html>

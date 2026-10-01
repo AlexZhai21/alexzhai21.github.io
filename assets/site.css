@@ -70,6 +70,7 @@ a:focus-visible { outline: 3px solid var(--green); outline-offset: 4px; border-r
 
 .site-footer { border-top: 1px solid var(--line); }
 .footer-inner { display: flex; justify-content: space-between; gap: 20px; padding-block: 28px; color: var(--muted); font-size: 12px; }
+.footer-links { display: flex; flex-wrap: wrap; gap: 16px 24px; }
 
 .article-shell { max-width: 980px; padding-block: 50px 100px; }
 .back-link { color: var(--green); font-size: 12px; font-weight: 700; }

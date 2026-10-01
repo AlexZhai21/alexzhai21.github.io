@@ -27,7 +27,22 @@
     <a class="back-link" href="../index.html#projects"><span aria-hidden="true">←</span> Back to Recent</a>
     <header class="article-header"><div class="article-date"><time datetime="2026-06-15">June 15, 2026</time></div><h1>Recreating GPT-2</h1><p class="article-deck">Building and training a GPT-2 model from scratch in PyTorch.</p><div class="article-actions"><a class="button button-dark" href="https://github.com/AlexZhai21/DeepLearning_and_Transformers/tree/main/Chat%20GPT%202" target="_blank" rel="noopener noreferrer">GitHub repository <span aria-hidden="true">↗</span></a></div></header>
     <div class="article-rule"></div>
-    <article class="prose" aria-label="Project article"><p>I built a GPT-2 style language model in PyTorch and fine-tuned it on OpenAssistant data. The <a href="https://github.com/AlexZhai21/DeepLearning_and_Transformers">same repository</a> also contains a vision transformer built from scratch and a flow matching experiment. Those projects do not have separate articles yet.</p>
+    <article class="prose" aria-label="Project article"><section class="gpt-demo" aria-labelledby="gpt-demo-title">
+      <h2 id="gpt-demo-title">Try GPT-2</h2>
+      <p>This demo uses a <a href="https://huggingface.co/Xenova/gpt2" target="_blank" rel="noopener noreferrer">browser-ready copy of pretrained GPT-2</a>, not my PyTorch implementation or fine-tuned model. GPT-2 continues text, so its replies may not behave like a modern chatbot.</p>
+      <p>The first load downloads about 130 MB to your browser. Your messages are processed on your device.</p>
+      <button class="button button-dark" id="gpt-load" type="button">Load GPT-2</button>
+      <p class="gpt-status" id="gpt-status" role="status" aria-live="polite">Load the model to start.</p>
+      <div class="gpt-messages" id="gpt-messages" role="log" aria-label="GPT-2 conversation" aria-live="polite"></div>
+      <form class="gpt-form" id="gpt-form">
+        <label for="gpt-input">Your message</label>
+        <textarea id="gpt-input" rows="3" maxlength="300" placeholder="Ask GPT-2 something…" disabled required></textarea>
+        <div class="gpt-form-actions">
+          <button class="button button-dark" id="gpt-send" type="submit" disabled>Send</button>
+          <button class="gpt-clear" id="gpt-clear" type="button" disabled>Clear conversation</button>
+        </div>
+      </form>
+    </section><p>I built a GPT-2 style language model in PyTorch and fine-tuned it on OpenAssistant data. The <a href="https://github.com/AlexZhai21/DeepLearning_and_Transformers">same repository</a> also contains a vision transformer built from scratch and a flow matching experiment. Those projects do not have separate articles yet.</p>
 <h2>The Transformer architecture</h2>
 <p>The transformer architecture consists of two main steps, Attention and a Neural Network.</p>
 <p>The input to our model is <code>B x T x C</code>, where <code>B</code> is the batch size, <code>T</code> is the sequence length, and <code>C</code> is the embedding.</p>
@@ -102,7 +117,7 @@ When predicting cat, we mask that row so &quot;the&quot; can only attend to itse
 </article>
     <div class="article-end"><a href="https://github.com/AlexZhai21/DeepLearning_and_Transformers/tree/main/Chat%20GPT%202" target="_blank" rel="noopener noreferrer">GitHub repository <span aria-hidden="true">↗</span></a></div>
     <a class="back-link bottom-back" href="../index.html#projects"><span aria-hidden="true">←</span> Back to Recent</a>
-  </div>
+  </div><script type="module" src="../assets/gpt2-demo.js"></script>
   </main>
   <footer class="site-footer">
     <div class="container footer-inner"><span>Alex Zhai</span><a href="https://github.com/AlexZhai21" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a></div>

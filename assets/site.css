@@ -120,6 +120,26 @@ a:focus-visible { outline: 3px solid var(--green); outline-offset: 4px; border-r
 .prose .demo-images img, .demo-images canvas { display: block; width: 100%; height: auto; margin: 0; border: 1px solid var(--line); border-radius: 3px; background: #e8ebe6; }
 .demo-images figcaption { margin-top: 7px; color: var(--muted); font-size: 12px; }
 .prose .demo-note { margin: 18px 0 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+.gpt-demo { margin: 0 0 48px; padding: 24px; border: 1px solid var(--line); border-radius: 6px; background: var(--paper); }
+.prose .gpt-demo h2 { margin: 0 0 12px; font-size: 33px; }
+.prose .gpt-demo > p { margin: 0 0 12px; font-size: 14px; line-height: 1.6; }
+.gpt-demo button { font-family: inherit; cursor: pointer; }
+.gpt-demo button:disabled { opacity: .55; cursor: not-allowed; }
+.prose .gpt-status { min-height: 1.5em; margin: 14px 0; color: var(--muted); font-size: 12px; }
+.gpt-messages { display: grid; align-content: start; gap: 12px; min-height: 110px; max-height: 380px; overflow-y: auto; padding: 16px; border: 1px solid var(--line); border-radius: 5px; background: var(--bg); }
+.gpt-messages:empty::before { content: 'The conversation will appear here.'; color: var(--muted); font-size: 13px; }
+.gpt-message { max-width: 90%; padding: 12px 15px; border-radius: 8px; background: #e9eee7; font-size: 14px; line-height: 1.55; }
+.gpt-message.user { justify-self: end; background: #dce8df; }
+.gpt-message.model { justify-self: start; background: var(--paper); border: 1px solid var(--line); }
+.gpt-message strong { display: block; margin-bottom: 4px; font-size: 11px; }
+.gpt-message span { display: block; white-space: pre-wrap; overflow-wrap: anywhere; }
+.gpt-form { display: grid; gap: 9px; margin-top: 18px; }
+.gpt-form label { font-size: 13px; font-weight: 700; }
+.gpt-form textarea { width: 100%; min-height: 82px; padding: 11px 13px; border: 1px solid var(--line); border-radius: 4px; background: white; color: var(--ink); font: inherit; font-size: 14px; line-height: 1.5; resize: vertical; }
+.gpt-form textarea:focus-visible { outline: 3px solid var(--green); outline-offset: 2px; }
+.gpt-form-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 18px; }
+.gpt-clear { padding: 6px 0; border: 0; background: transparent; color: var(--green); font-size: 12px; font-weight: 700; }
+.gpt-clear:hover { text-decoration: underline; text-underline-offset: 3px; }
 .example-block { margin-top: 52px; padding-top: 3px; border-top: 1px solid var(--line); }
 .comparison-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 28px; }
 .comparison-grid figure { min-width: 0; margin: 0; }
@@ -154,6 +174,7 @@ a:focus-visible { outline: 3px solid var(--green); outline-offset: 4px; border-r
   .comparison-grid img { aspect-ratio: 1.7; }
   .svd-demo { padding: 17px; }
   .demo-images { grid-template-columns: 1fr; }
+  .gpt-demo { padding: 17px; }
   .evaluation-grid { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) {

@@ -112,3 +112,38 @@ Essentially, an action chunking model can learn multiple temporal relations.
 For example: $a_t|o_t$ for one chunk, $a_t|o_{t-1}$ for another chunk, all the way to $a_t|o_{t-k + 1}$ for the kth chunk. These are DIFFERENT predictions for the SAME action ($a_t$), since action $a_t$ appears in overlapping chunks.
 In their experiments, they discovered that this ensembling affect was similar to an actual ensemble model (training multiple individual models then averaging their predictions). 
 The paper argues that these explain why action chunking improves behavioral cloning performance.
+
+## Evaluation Runs
+
+<div class="evaluation-grid">
+  <figure>
+    <img src="../assets/act-eval-005.webp" alt="Robot arm evaluation run 005" width="480" height="360">
+    <figcaption>Evaluation run 005</figcaption>
+  </figure>
+  <figure>
+    <img src="../assets/act-eval-007.webp" alt="Robot arm evaluation run 007" width="480" height="360">
+    <figcaption>Evaluation run 007</figcaption>
+  </figure>
+  <figure>
+    <img src="../assets/act-eval-008.webp" alt="Robot arm evaluation run 008" width="480" height="360">
+    <figcaption>Evaluation run 008</figcaption>
+  </figure>
+  <figure>
+    <img src="../assets/act-eval-010.webp" alt="Robot arm evaluation run 010" width="480" height="360">
+    <figcaption>Evaluation run 010</figcaption>
+  </figure>
+</div>
+
+### Unexpected interference
+
+<figure class="evaluation-feature">
+  <img src="../assets/act-eval-006.webp" alt="Robot arm evaluation run 006 with unexpected interference" width="480" height="360">
+  <figcaption>Evaluation run 006</figcaption>
+</figure>
+
+Even with failed pickups and no recovery trajectories in the training data, the policy attempts recovery:
+
+<figure class="evaluation-feature">
+  <img src="../assets/act-eval-70k-001.webp" alt="Robot arm evaluation run 001 attempting recovery after a failed pickup" width="480" height="360">
+  <figcaption>Evaluation run 001 after 70K training steps</figcaption>
+</figure>

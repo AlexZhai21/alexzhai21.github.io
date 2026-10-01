@@ -91,6 +91,35 @@ Essentially, an action chunking model can learn multiple temporal relations.
 For example: <span class="math-inline">\(a_t|o_t\)</span> for one chunk, <span class="math-inline">\(a_t|o_{t-1}\)</span> for another chunk, all the way to <span class="math-inline">\(a_t|o_{t-k + 1}\)</span> for the kth chunk. These are DIFFERENT predictions for the SAME action (<span class="math-inline">\(a_t\)</span>), since action <span class="math-inline">\(a_t\)</span> appears in overlapping chunks.
 In their experiments, they discovered that this ensembling affect was similar to an actual ensemble model (training multiple individual models then averaging their predictions).
 The paper argues that these explain why action chunking improves behavioral cloning performance.</p>
+<h2>Evaluation Runs</h2>
+<div class="evaluation-grid">
+  <figure>
+    <img loading="lazy" decoding="async" src="../assets/act-eval-005.webp" alt="Robot arm evaluation run 005" width="480" height="360">
+    <figcaption>Evaluation run 005</figcaption>
+  </figure>
+  <figure>
+    <img loading="lazy" decoding="async" src="../assets/act-eval-007.webp" alt="Robot arm evaluation run 007" width="480" height="360">
+    <figcaption>Evaluation run 007</figcaption>
+  </figure>
+  <figure>
+    <img loading="lazy" decoding="async" src="../assets/act-eval-008.webp" alt="Robot arm evaluation run 008" width="480" height="360">
+    <figcaption>Evaluation run 008</figcaption>
+  </figure>
+  <figure>
+    <img loading="lazy" decoding="async" src="../assets/act-eval-010.webp" alt="Robot arm evaluation run 010" width="480" height="360">
+    <figcaption>Evaluation run 010</figcaption>
+  </figure>
+</div>
+<h3>Unexpected interference</h3>
+<figure class="evaluation-feature">
+  <img loading="lazy" decoding="async" src="../assets/act-eval-006.webp" alt="Robot arm evaluation run 006 with unexpected interference" width="480" height="360">
+  <figcaption>Evaluation run 006</figcaption>
+</figure>
+<p>Even with failed pickups and no recovery trajectories in the training data, the policy attempts recovery:</p>
+<figure class="evaluation-feature">
+  <img loading="lazy" decoding="async" src="../assets/act-eval-70k-001.webp" alt="Robot arm evaluation run 001 attempting recovery after a failed pickup" width="480" height="360">
+  <figcaption>Evaluation run 001 after 70K training steps</figcaption>
+</figure>
 </article>
     <div class="article-end"><a href="https://github.com/AlexZhai21/ActionChunkingTransformers" target="_blank" rel="noopener noreferrer">GitHub repository <span aria-hidden="true">↗</span></a></div>
     <a class="back-link bottom-back" href="../index.html#projects"><span aria-hidden="true">←</span> Back to Recent</a>

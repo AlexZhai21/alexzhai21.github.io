@@ -21,4 +21,4 @@ Commit the updated `content/` files and generated HTML together. `build.py` adju
 
 Create a public repository named `AlexZhai21.github.io`, push this folder's contents to its default branch, then set **Settings → Pages → Build and deployment → Deploy from a branch** and select the default branch and `/ (root)`. The site will be available at `https://alexzhai21.github.io/` after GitHub publishes it.
 
-This site is plain HTML and CSS. No runtime build service or JavaScript framework is needed. The ACT article loads MathJax to render equations from its README.
+This site is plain HTML, CSS, and a small amount of JavaScript. No runtime build service or JavaScript framework is needed. The ACT article loads MathJax to render equations from its README. The SVD article includes a browser-based image upload and rank slider; it processes images locally at up to 192 pixels for a responsive preview. The original Python Streamlit app remains in its project repository.

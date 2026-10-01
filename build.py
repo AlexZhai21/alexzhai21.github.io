@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import base64
 from html import escape
 from pathlib import Path
 import re
@@ -12,6 +13,7 @@ from markdown_it import MarkdownIt
 ROOT = Path(__file__).resolve().parent
 ARTICLES = ROOT / "articles"
 MARKDOWN = MarkdownIt("commonmark", {"html": True}).enable("table")
+MATH = re.compile(r"\$\$([\s\S]*?)\$\$|\$([^$\n]+?)\$")
 
 PROJECTS = [
     {
@@ -38,14 +40,7 @@ PROJECTS = [
 def shell(*, title: str, description: str, body: str, prefix: str = "", math: bool = False) -> str:
     math_head = ""
     if math:
-        math_head = """
-  <script>
-    window.MathJax = {
-      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] },
-      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
-    };
-  </script>
-  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>"""
+        math_head = '\n  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>'
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -122,15 +117,64 @@ def index_page() -> str:
     return shell(title="Projects", description="Projects and articles by Alex Zhai about robotics, machine learning, and image processing.", body=body)
 
 
+def render_readme(source: str, *, math: bool) -> str:
+    if not math:
+        return MARKDOWN.render(source)
+
+    expressions: list[tuple[str, str, bool]] = []
+
+    def protect(match: re.Match[str]) -> str:
+        display = match.group(1) is not None
+        tex = (match.group(1) if display else match.group(2)).strip()
+        marker = f"MATHMARKER{len(expressions)}END"
+        expressions.append((marker, tex, display))
+        return marker
+
+    rendered = MARKDOWN.render(MATH.sub(protect, source))
+    for marker, tex, display in expressions:
+        if display:
+            replacement = f'<div class="math-display">\\[{escape(tex)}\\]</div>'
+            rendered = rendered.replace(f"<p>{marker}</p>", replacement)
+        else:
+            replacement = f'<span class="math-inline">\\({escape(tex)}\\)</span>'
+        rendered = rendered.replace(marker, replacement)
+    return rendered
+
+
+def svd_demo() -> str:
+    sample_bytes = (ROOT / "assets/svd-original_grayscale.webp").read_bytes()
+    sample_data = base64.b64encode(sample_bytes).decode("ascii")
+    return f"""<section class="svd-demo" aria-labelledby="svd-demo-title">
+      <h2 id="svd-demo-title">Try it</h2>
+      <p>Upload an image and change the rank to see the approximation.</p>
+      <div class="demo-controls">
+        <label for="svdUpload">Image</label>
+        <input id="svdUpload" type="file" accept="image/png,image/jpeg,image/webp,image/bmp,image/gif">
+        <label for="svdRank">Rank <output id="svdRankValue" for="svdRank">1</output></label>
+        <input id="svdRank" type="range" min="1" max="1" value="1" disabled>
+        <p id="svdStatus" class="demo-status" role="status" aria-live="polite">Preparing the example image…</p>
+      </div>
+      <div class="demo-images">
+        <figure><img id="svdOriginalImage" src="data:image/webp;base64,{sample_data}" alt="Original example image of a dog in a field"><figcaption>Original</figcaption></figure>
+        <figure><canvas id="svdResultCanvas" role="img" aria-label="Low-rank approximation of the selected image">Your browser does not support canvas.</canvas><figcaption>Approximation</figcaption></figure>
+      </div>
+      <p class="demo-note">The preview is converted to grayscale and resized to at most 192 pixels. Uploaded images stay in your browser.</p>
+    </section>"""
+
+
 def article_page(project: dict[str, str]) -> str:
     source = (ROOT / project["source"]).read_text(encoding="utf-8")
     source = re.sub(r"\A# .+\n+", "", source, count=1)
     source = re.sub(r"(?m)^##\s*$\n?", "", source)
     if project["slug"] == "robot-arm":
         source = source.replace("outputs/can_demo_0.gif", "../assets/robot-demo.webp")
-    rendered = MARKDOWN.render(source)
+    if project["slug"] == "svd":
+        source = re.split(r"(?m)^## Interactive app\s*$", source, maxsplit=1)[0]
+    rendered = render_readme(source, math=project["slug"] == "robot-arm")
     rendered = rendered.replace("<img ", '<img loading="lazy" decoding="async" ')
     if project["slug"] == "svd":
+        demo = svd_demo()
+        demo_script = '<script defer src="../assets/svd-demo.js"></script>'
         gallery = """<div class="example-block"><h2>Image examples</h2><p>The same image at different approximation ranks.</p>
           <div class="comparison-grid">
             <figure><img src="../assets/svd-original_grayscale.webp" alt="Original grayscale image of a dog in a field" loading="lazy" width="512" height="256"><figcaption>Original</figcaption></figure>
@@ -139,16 +183,18 @@ def article_page(project: dict[str, str]) -> str:
           </div>
         </div>"""
     else:
+        demo = ""
+        demo_script = ""
         gallery = ""
     body = f"""
   <div class="article-shell container">
     <a class="back-link" href="../index.html#projects"><span aria-hidden="true">←</span> All projects</a>
     <header class="article-header"><h1>{escape(project['title'])}</h1><p class="article-deck">{escape(project['description'])}</p><div class="article-actions"><a class="button button-dark" href="{project['github']}" target="_blank" rel="noopener noreferrer">GitHub repository <span aria-hidden="true">↗</span></a></div></header>
     <div class="article-rule"></div>
-    <article class="prose" aria-label="Project article">{rendered}{gallery}</article>
+    <article class="prose" aria-label="Project article">{demo}{rendered}{gallery}</article>
     <div class="article-end"><a href="{project['github']}" target="_blank" rel="noopener noreferrer">GitHub repository <span aria-hidden="true">↗</span></a></div>
     <a class="back-link bottom-back" href="../index.html#articles"><span aria-hidden="true">←</span> Back to all articles</a>
-  </div>
+  </div>{demo_script}
   """
     return shell(title=project["title"], description=project["description"], body=body, prefix="../", math=project["slug"] == "robot-arm")
 

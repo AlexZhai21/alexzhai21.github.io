@@ -93,6 +93,24 @@ a:focus-visible { outline: 3px solid var(--green); outline-offset: 4px; border-r
 .prose ul, .prose ol { padding-left: 1.4em; }
 .prose li { margin-bottom: 8px; }
 .prose mjx-container[display="true"] { max-width: 100%; overflow-x: auto; overflow-y: hidden; padding-block: 8px; }
+.math-display { max-width: 100%; overflow-x: auto; margin: 24px 0; }
+.svd-demo { margin-bottom: 42px; padding: 24px; border: 1px solid var(--line); border-radius: 6px; background: var(--paper); }
+.prose .svd-demo h2 { margin: 0 0 8px; font-size: 33px; }
+.prose .svd-demo > p { margin: 0; }
+.demo-controls { display: grid; gap: 10px; margin: 24px 0 18px; }
+.demo-controls label { color: var(--ink); font-size: 13px; font-weight: 700; line-height: 1.4; }
+.demo-controls label[for="svdRank"] { display: flex; justify-content: space-between; margin-top: 10px; }
+.demo-controls output { color: var(--green); font-variant-numeric: tabular-nums; }
+.demo-controls input[type="file"] { max-width: 100%; color: var(--muted); font: inherit; font-size: 13px; }
+.demo-controls input[type="file"]::file-selector-button { margin-right: 12px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 3px; background: var(--bg); color: var(--ink); font: inherit; font-weight: 700; cursor: pointer; }
+.demo-controls input[type="range"] { width: 100%; margin: 0; accent-color: var(--green); cursor: pointer; }
+.demo-controls input[type="range"]:disabled { cursor: wait; }
+.prose .demo-status { min-height: 1.4em; margin: 2px 0 0; color: var(--muted); font-size: 12px; line-height: 1.4; }
+.demo-images { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.demo-images figure { min-width: 0; margin: 0; }
+.prose .demo-images img, .demo-images canvas { display: block; width: 100%; height: auto; margin: 0; border: 1px solid var(--line); border-radius: 3px; background: #e8ebe6; }
+.demo-images figcaption { margin-top: 7px; color: var(--muted); font-size: 12px; }
+.prose .demo-note { margin: 18px 0 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
 .example-block { margin-top: 52px; padding-top: 3px; border-top: 1px solid var(--line); }
 .comparison-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 28px; }
 .comparison-grid figure { min-width: 0; margin: 0; }
@@ -126,6 +144,8 @@ a:focus-visible { outline: 3px solid var(--green); outline-offset: 4px; border-r
   .prose { font-size: 15px; }
   .comparison-grid { grid-template-columns: 1fr; }
   .comparison-grid img { aspect-ratio: 1.7; }
+  .svd-demo { padding: 17px; }
+  .demo-images { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

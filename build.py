@@ -181,25 +181,6 @@ def svd_demo() -> str:
     </section>"""
 
 
-def gpt2_demo() -> str:
-    return """<section class="gpt-demo" aria-labelledby="gpt-demo-title">
-      <h2 id="gpt-demo-title">Try GPT-2</h2>
-      <p>This demo uses a <a href="https://huggingface.co/Xenova/gpt2" target="_blank" rel="noopener noreferrer">browser-ready copy of pretrained GPT-2</a>, not my PyTorch implementation or fine-tuned model. GPT-2 continues text, so its replies may not behave like a modern chatbot.</p>
-      <p>The first load downloads about 130 MB to your browser. Your messages are processed on your device.</p>
-      <button class="button button-dark" id="gpt-load" type="button">Load GPT-2</button>
-      <p class="gpt-status" id="gpt-status" role="status" aria-live="polite">Load the model to start.</p>
-      <div class="gpt-messages" id="gpt-messages" role="log" aria-label="GPT-2 conversation" aria-live="polite"></div>
-      <form class="gpt-form" id="gpt-form">
-        <label for="gpt-input">Your message</label>
-        <textarea id="gpt-input" rows="3" maxlength="300" placeholder="Ask GPT-2 something…" disabled required></textarea>
-        <div class="gpt-form-actions">
-          <button class="button button-dark" id="gpt-send" type="submit" disabled>Send</button>
-          <button class="gpt-clear" id="gpt-clear" type="button" disabled>Clear conversation</button>
-        </div>
-      </form>
-    </section>"""
-
-
 def article_page(project: dict[str, str]) -> str:
     source = project["body"]
     source = re.sub(r"\A# .+\n+", "", source, count=1)
@@ -220,10 +201,6 @@ def article_page(project: dict[str, str]) -> str:
             <figure><img src="../assets/svd-rank_25.webp" alt="Rank 25 approximation of the same image" loading="lazy" width="512" height="256"><figcaption>Rank 25</figcaption></figure>
           </div>
         </div>"""
-    elif project["slug"] == "gpt-2":
-        demo = gpt2_demo()
-        demo_script = '<script type="module" src="../assets/gpt2-demo.js"></script>'
-        gallery = ""
     else:
         demo = ""
         demo_script = ""

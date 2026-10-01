@@ -141,3 +141,5 @@ Even with failed pickups and no recovery trajectories in the training data, the 
 <figure class="evaluation-feature">
   <img src="../assets/act-eval-70k-001.webp" alt="Robot arm attempting recovery after a failed pickup" width="480" height="360">
 </figure>
+
+A future direction I plan to tackle (on a live robot arm) is to randomize the starting points of my data. I hypothesize that this would allow the robot to successfully recover in many situations, even without specific recovery trajectories in the data!

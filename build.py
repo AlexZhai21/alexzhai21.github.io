@@ -123,7 +123,6 @@ def index_page(projects: list[dict[str, str]]) -> str:
   <section class="hero container" aria-labelledby="hero-title">
     <div class="hero-copy">
       <h1 id="hero-title">Alex Zhai</h1>
-      <p class="hero-description">Robotics, machine learning, and image processing.</p>
     </div>
   </section>
   <section class="section about-section container" id="about" aria-labelledby="about-title">

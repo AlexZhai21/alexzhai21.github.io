@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f6f5f0">
-  <meta name="description" content="A small experiment that rebuilds an image with fewer singular values, with a live rank slider in the app.">
-  <title>Image approximation using SVD · Alex Zhai</title>
+  <meta name="description" content="An image approximation project using SVD, with an interactive rank slider.">
+  <title>Image approximation with SVD · Alex Zhai</title>
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../assets/site.css">
 </head>
@@ -13,7 +13,7 @@
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="container header-inner">
-      <a class="wordmark" href="../index.html" aria-label="Alex Zhai, home"><span class="mark">AZ</span><span>Alex Zhai</span></a>
+      <a class="wordmark" href="../index.html" aria-label="Alex Zhai, home">Alex Zhai</a>
       <nav aria-label="Main navigation">
         <a href="../index.html#projects">Projects</a>
         <a href="../index.html#articles">Articles</a>
@@ -24,7 +24,7 @@
   <main id="main">
   <div class="article-shell container">
     <a class="back-link" href="../index.html#projects"><span aria-hidden="true">←</span> All projects</a>
-    <header class="article-header"><p class="section-kicker">Linear algebra · visual computing / Project notes</p><h1>Image approximation using SVD</h1><p class="article-deck">A small experiment that rebuilds an image with fewer singular values, with a live rank slider in the app.</p><div class="article-actions"><a class="button button-dark" href="https://github.com/AlexZhai21/Image-Approximation-using-SVD" target="_blank" rel="noopener noreferrer">View project on GitHub <span aria-hidden="true">↗</span></a><span>From the project README</span></div></header>
+    <header class="article-header"><h1>Image approximation with SVD</h1><p class="article-deck">An image approximation project using SVD, with an interactive rank slider.</p><div class="article-actions"><a class="button button-dark" href="https://github.com/AlexZhai21/Image-Approximation-using-SVD" target="_blank" rel="noopener noreferrer">GitHub repository <span aria-hidden="true">↗</span></a></div></header>
     <div class="article-rule"></div>
     <article class="prose" aria-label="Project article"><p>Built an SVD class to perform rank approximations on images!
 svd.py contains my implementation of an SVD class that takes in an image and outputs a rank approximation.
@@ -36,19 +36,19 @@ More detailed Read Me coming soon!</p>
 </code></pre>
 <p>The app lets you upload an image and drag a live rank slider to watch the SVD approximation update.</p>
 <p>For a public link later, deploy this repo to Streamlit Community Cloud or Hugging Face Spaces with <code>app.py</code> as the entry point and <code>requirements.txt</code> as the dependency file.</p>
-<div class="example-block"><h2>What the ranks look like</h2><p>The same image, reconstructed with different numbers of singular values.</p>
+<div class="example-block"><h2>Image examples</h2><p>The same image at different approximation ranks.</p>
           <div class="comparison-grid">
             <figure><img src="../assets/svd-original_grayscale.webp" alt="Original grayscale image of a dog in a field" loading="lazy" width="512" height="256"><figcaption>Original</figcaption></figure>
             <figure><img src="../assets/svd-rank_10.webp" alt="Rank 10 approximation of the same image" loading="lazy" width="512" height="256"><figcaption>Rank 10</figcaption></figure>
             <figure><img src="../assets/svd-rank_25.webp" alt="Rank 25 approximation of the same image" loading="lazy" width="512" height="256"><figcaption>Rank 25</figcaption></figure>
           </div>
         </div></article>
-    <div class="article-end"><p>That’s the project. The code and latest README live on GitHub.</p><a href="https://github.com/AlexZhai21/Image-Approximation-using-SVD" target="_blank" rel="noopener noreferrer">Explore the repository <span aria-hidden="true">↗</span></a></div>
+    <div class="article-end"><a href="https://github.com/AlexZhai21/Image-Approximation-using-SVD" target="_blank" rel="noopener noreferrer">GitHub repository <span aria-hidden="true">↗</span></a></div>
     <a class="back-link bottom-back" href="../index.html#articles"><span aria-hidden="true">←</span> Back to all articles</a>
   </div>
   </main>
   <footer class="site-footer">
-    <div class="container footer-inner"><span>Alex Zhai · Projects &amp; writing</span><a href="https://github.com/AlexZhai21" target="_blank" rel="noopener noreferrer">GitHub profile <span aria-hidden="true">↗</span></a></div>
+    <div class="container footer-inner"><span>Alex Zhai</span><a href="https://github.com/AlexZhai21" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a></div>
   </footer>
 </body>
 </html>

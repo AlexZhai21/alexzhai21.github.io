@@ -136,8 +136,12 @@ def index_page(projects: list[dict[str, str]]) -> str:
       <blockquote><p>{escape(recommendation)}</p></blockquote>
       <figcaption class="recommendation-attribution">
         <span class="recommendation-avatar" aria-hidden="true">SL</span>
-        <span class="recommendation-person"><strong><a href="https://www.linkedin.com/in/siying-li-b87ba1159/" target="_blank" rel="noopener noreferrer">Siying Li <span aria-hidden="true">↗</span></a></strong><span>Data Scientist · Product Analytics · Statistical Analysis &amp; ML</span><span>Managed Alex directly</span></span>
-        <a href="https://www.linkedin.com/in/alexwzhai/" target="_blank" rel="noopener noreferrer">View on Alex's LinkedIn <span aria-hidden="true">↗</span></a>
+        <div class="recommendation-person">
+          <a class="recommendation-name" href="https://www.linkedin.com/in/siying-li-b87ba1159/" target="_blank" rel="noopener noreferrer">Siying Li <span aria-hidden="true">↗</span></a>
+          <p class="recommendation-role">Data Scientist · Product Analytics · Statistical Analysis &amp; ML</p>
+          <p class="recommendation-relationship">Managed Alex directly</p>
+          <a class="recommendation-link" href="https://www.linkedin.com/in/alexwzhai/" target="_blank" rel="noopener noreferrer">View on Alex's LinkedIn <span aria-hidden="true">↗</span></a>
+        </div>
       </figcaption>
     </figure>
   </section>

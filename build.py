@@ -98,8 +98,11 @@ def project_card(project: dict[str, str]) -> str:
           <img src="assets/svd-rank_10.webp" alt="The same photo approximated at rank 10" loading="lazy" width="512" height="256">
         </div>"""
     elif project.get("image"):
-        visual = f'''<div class="project-visual robot-visual">
-          <img src="{escape(project['image'], quote=True)}" alt="{escape(project['short_title'], quote=True)} project preview" loading="lazy" width="640" height="480">
+        visual_class = "logo-visual" if project["slug"] == "gpt-2" else "robot-visual"
+        image_alt = "OpenAI logo" if project["slug"] == "gpt-2" else f"{project['short_title']} project preview"
+        image_size = 'width="721" height="721"' if project["slug"] == "gpt-2" else 'width="640" height="480"'
+        visual = f'''<div class="project-visual {visual_class}">
+          <img src="{escape(project['image'], quote=True)}" alt="{escape(image_alt, quote=True)}" loading="lazy" {image_size}>
         </div>'''
     else:
         visual = f'<div class="project-visual text-visual"><span>{escape(project["short_title"])}</span></div>'

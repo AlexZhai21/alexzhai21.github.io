@@ -5,6 +5,7 @@ date: 2026-06-15
 description: Building and training a GPT-2 model from scratch in PyTorch.
 github: https://github.com/AlexZhai21/DeepLearning_and_Transformers/tree/main/Chat%20GPT%202
 math: true
+image: assets/openai-blossom.svg
 ---
 # Recreating GPT 2
 

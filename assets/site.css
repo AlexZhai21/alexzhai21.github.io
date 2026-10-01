@@ -53,6 +53,9 @@ a:focus-visible { outline: 3px solid var(--green); outline-offset: 4px; border-r
 .project-visual > img { width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
 .visual-link:hover .project-visual > img { transform: scale(1.04); }
 .robot-visual > img { object-position: center 52%; }
+.logo-visual { display: flex; align-items: center; justify-content: center; background: #e6ebe4; }
+.logo-visual > img { width: min(46%, 190px); height: auto; max-height: 62%; object-fit: contain; }
+.visual-link:hover .logo-visual > img { transform: none; }
 .svd-visual { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; background: #fff; }
 .svd-visual img { min-width: 0; width: 100%; height: 100%; object-fit: cover; }
 .svd-visual img:first-child { object-position: 49% center; }

@@ -59,4 +59,6 @@ git push origin main
 
 The build step is useful for the local preview; the GitHub workflow also builds after the push. If you add a new article, include its generated page in the commit. If you edit only on GitHub, you do not need to run Python yourself.
 
+The GPT-2 project card uses the [official OpenAI Blossom logo](https://openai.com/brand/). OpenAI owns the logo; the GPT-2 project is an independent recreation.
+
 The SVD demo runs in visitors' browsers and accepts their images there. The original Python Streamlit app is linked from the SVD article and repository.

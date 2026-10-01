@@ -14,6 +14,10 @@ python -m http.server 8000
 
 Open <http://localhost:8000> in your browser. Press Ctrl+C in PowerShell when finished. After an edit, run `python build.py` again and refresh the page.
 
+## Edit About me
+
+Open `content/about.md` and replace the sample sentence with your own introduction. You can use Markdown for paragraphs and links. Run `python build.py` to update the home page, then refresh the preview. The GitHub Pages workflow also rebuilds it after you push.
+
 ## Edit an article
 
 Open its Markdown file in `content/`, change the text, and save it. For example:
@@ -31,7 +35,7 @@ The lines between the two `---` markers at the top of each article set the title
 2. Fill in its details and write the article below the second `---` line. Put any images in `assets/` and link to them from the article as `../assets/your-image.webp`.
 3. Run `python build.py` and refresh the local preview. The builder adds the project card, article link, date, and page automatically. Articles are ordered newest first.
 
-The dates currently shown are the first Git commit dates for each project: GPT-2 on August 18, 2026; robot arm on August 20, 2026; SVD on September 16, 2026.
+The dates currently shown are GPT-2 on June 15, 2026; robot arm on August 20, 2026; and SVD on September 16, 2026. Edit the `date:` line in an article to change its displayed date.
 
 ## Publish updates
 

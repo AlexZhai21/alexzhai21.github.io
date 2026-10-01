@@ -1,7 +1,7 @@
 ---
 title: Recreating GPT-2
 short_title: GPT-2 from scratch
-date: 2026-08-18
+date: 2026-06-15
 description: Building and training a GPT-2 style language model from scratch in PyTorch.
 github: https://github.com/AlexZhai21/DeepLearning_and_Transformers/tree/main/Chat%20GPT%202
 math: true

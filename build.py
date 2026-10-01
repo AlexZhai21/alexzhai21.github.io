@@ -19,7 +19,7 @@ MATH = re.compile(r"\$\$([\s\S]*?)\$\$|\$([^$\n]+?)\$")
 def load_projects() -> list[dict[str, str]]:
     projects = []
     for path in (ROOT / "content").glob("*.md"):
-        if path.name.startswith("_"):
+        if path.name.startswith("_") or path.name == "about.md":
             continue
         source = path.read_text(encoding="utf-8")
         if not source.startswith("---\n"):
@@ -74,6 +74,7 @@ def shell(*, title: str, description: str, body: str, prefix: str = "", math: bo
     <div class="container header-inner">
       <a class="wordmark" href="{prefix}index.html" aria-label="Alex Zhai, home">Alex Zhai</a>
       <nav aria-label="Main navigation">
+        <a href="{prefix}index.html#about">About</a>
         <a href="{prefix}index.html#projects">Projects</a>
         <a href="{prefix}index.html#articles">Articles</a>
         <a href="https://github.com/AlexZhai21" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
@@ -113,6 +114,7 @@ def project_card(project: dict[str, str]) -> str:
 
 def index_page(projects: list[dict[str, str]]) -> str:
     cards = "\n".join(project_card(project) for project in projects)
+    about = MARKDOWN.render((ROOT / "content/about.md").read_text(encoding="utf-8"))
     articles = "\n".join(
         f"""<li><a href="articles/{p['slug']}.html"><span class="article-list-text"><strong>{escape(p['title'])}</strong><span class="article-list-date">{date_markup(p)}</span></span><span class="arrow" aria-hidden="true">↗</span></a></li>"""
         for p in projects
@@ -123,6 +125,10 @@ def index_page(projects: list[dict[str, str]]) -> str:
       <h1 id="hero-title">Alex Zhai</h1>
       <p class="hero-description">Robotics, machine learning, and image processing.</p>
     </div>
+  </section>
+  <section class="section about-section container" id="about" aria-labelledby="about-title">
+    <div class="section-heading"><h2 id="about-title">About me</h2></div>
+    <div class="about-copy">{about}</div>
   </section>
   <section class="section container" id="projects" aria-labelledby="projects-title">
     <div class="section-heading"><h2 id="projects-title">Projects</h2></div>

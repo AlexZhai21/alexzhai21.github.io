@@ -51,8 +51,11 @@ a:focus-visible { outline: 3px solid var(--green); outline-offset: 4px; border-r
 .svd-visual { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; background: #fff; }
 .svd-visual img { min-width: 0; width: 100%; height: 100%; object-fit: cover; }
 .svd-visual img:first-child { object-position: 49% center; }
+.text-visual { display: flex; align-items: center; justify-content: center; padding: 32px; background: #dce8df; color: #244735; }
+.text-visual span { font-family: var(--serif); font-size: clamp(52px, 7vw, 88px); letter-spacing: -.07em; line-height: 1; }
 .project-card h3 { margin: 24px 8px 0; font-family: var(--serif); font-size: clamp(26px, 3vw, 36px); font-weight: 400; letter-spacing: -.035em; }
 .project-card h3 a:hover { color: var(--green); }
+.project-date { margin: 8px 8px 0; color: var(--muted); font-size: 12px; }
 .project-card p { min-height: 3.2em; margin: 14px 8px 24px; color: var(--muted); font-size: 14px; line-height: 1.65; }
 .card-links { display: flex; flex-wrap: wrap; gap: 14px 24px; margin: 0 8px; }
 .card-links a { color: #365a47; font-size: 12px; font-weight: 750; }
@@ -62,8 +65,9 @@ a:focus-visible { outline: 3px solid var(--green); outline-offset: 4px; border-r
 .article-list li { border-bottom: 1px solid #cbd8ca; }
 .article-list a { display: flex; align-items: center; gap: 28px; min-height: 82px; padding: 18px 7px; transition: padding .2s ease, color .2s ease; }
 .article-list a:hover { padding-left: 15px; color: var(--green); }
-.article-list-text { display: flex; flex: 1; }
+.article-list-text { display: flex; flex: 1; flex-direction: column; gap: 6px; }
 .article-list strong { font-family: var(--serif); font-size: clamp(21px, 2.4vw, 31px); font-weight: 400; letter-spacing: -.03em; }
+.article-list-date { color: var(--muted); font-size: 12px; }
 .arrow { font-size: 24px; font-weight: 300; }
 .site-footer { border-top: 1px solid var(--line); }
 .footer-inner { display: flex; justify-content: space-between; gap: 20px; padding-block: 28px; color: var(--muted); font-size: 12px; }
@@ -72,6 +76,7 @@ a:focus-visible { outline: 3px solid var(--green); outline-offset: 4px; border-r
 .back-link { color: var(--green); font-size: 12px; font-weight: 700; }
 .back-link:hover { text-decoration: underline; text-underline-offset: 4px; }
 .article-header { padding-block: 64px 54px; }
+.article-date { margin-bottom: 16px; color: var(--muted); font-size: 13px; }
 .article-header h1 { max-width: 810px; margin: 0; font-family: var(--serif); font-size: clamp(46px, 6vw, 72px); font-weight: 400; letter-spacing: -.057em; line-height: 1.08; }
 .article-deck { max-width: 680px; margin: 24px 0 0; color: #4f5b52; font-size: clamp(17px, 1.8vw, 20px); line-height: 1.65; }
 .article-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 22px; margin-top: 32px; }

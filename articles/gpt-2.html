@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f5f0">
+  <meta name="description" content="Building and training a GPT-2 style language model from scratch in PyTorch.">
+  <title>Recreating GPT-2 · Alex Zhai</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="wordmark" href="../index.html" aria-label="Alex Zhai, home">Alex Zhai</a>
+      <nav aria-label="Main navigation">
+        <a href="../index.html#projects">Projects</a>
+        <a href="../index.html#articles">Articles</a>
+        <a href="https://github.com/AlexZhai21" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+  <div class="article-shell container">
+    <a class="back-link" href="../index.html#projects"><span aria-hidden="true">←</span> All projects</a>
+    <header class="article-header"><div class="article-date"><time datetime="2026-08-18">August 18, 2026</time></div><h1>Recreating GPT-2</h1><p class="article-deck">Building and training a GPT-2 style language model from scratch in PyTorch.</p><div class="article-actions"><a class="button button-dark" href="https://github.com/AlexZhai21/DeepLearning_and_Transformers/tree/main/Chat%20GPT%202" target="_blank" rel="noopener noreferrer">GitHub repository <span aria-hidden="true">↗</span></a></div></header>
+    <div class="article-rule"></div>
+    <article class="prose" aria-label="Project article"><p>I built a GPT-2 style language model in PyTorch and fine-tuned it on OpenAssistant data. The <a href="https://github.com/AlexZhai21/DeepLearning_and_Transformers">same repository</a> also contains a vision transformer built from scratch and a flow matching experiment. Those projects do not have separate articles yet.</p>
+<h2>The Transformer architecture</h2>
+<p>The transformer architecture consists of two main steps, Attention and a Neural Network.</p>
+<p>The input to our model is <code>B x T x C</code>, where <code>B</code> is the batch size, <code>T</code> is the sequence length, and <code>C</code> is the embedding.</p>
+<h2>Post Norm vs Prenorm</h2>
+<p>In the original transformer paper, they perform post norm normalization, where the normalization occurs after the residual connections.
+In our GPT2 model, we employ pre norm normalization. This can be seen in the Block class.
+In the Block class, our forward method performs the normalization first, THEN does the residual connection.
+This keeps a &quot;clean&quot; residual stream, where our gradients can flow through residual connections unchanged and not have normalization applied to them.</p>
+<h2>Attention</h2>
+<p>The final output of attention is more &quot;contextualized&quot; representation of a user's input tokens.</p>
+<p>This is accomplished using Query, Key, and Value matrices.</p>
+<ul>
+<li>The Query matrix is &quot;what a token looks for&quot;.</li>
+<li>The Key matrix is &quot;what a token offers&quot;.</li>
+<li>The Value matrix is &quot;how a token affects the representation of other tokens&quot; when other tokens attend to this one.</li>
+</ul>
+<p>In <code>models.py</code>, attention is implemented in the <code>CausalSelfAttention</code> class.</p>
+<p>We initialize <code>self.c_attn</code> to be <code>n_embd, 3*n_embd</code> to create 3 separate <code>n_embd</code> dimension matrices, for Query, Key, and Value.</p>
+<p>For multi-headed attention, we split the embedding dimension of Q K and V into #head number of matrices. We apply each attention head separately, before concatenating each result back together.</p>
+<p>A projection matrix mixes the results of all the separate attention heads.</p>
+<p>Multi headed attention allows us to represent multiple relationships in parallel.</p>
+<h2>Causal Masking</h2>
+<p>GPT-2 is an autoregressive model, meaning it predicts the next token using only the tokens that came before it.
+If we didn't perform masking, we would be leaking information on the token we want to predict next.
+This is why the attention layer is causal. Token 5 can attend to tokens 1 through 5, but it cannot attend to token 6 or any future token.</p>
+<p>When training our model, transformers often train next token prediction on every word in the sentence, not JUST the final word.
+For example, &quot;the cat sat on the rat&quot;, &quot;the&quot; -&gt; &quot;cat&quot;, &quot;the cat&quot; -&gt; &quot;sat&quot;, &quot;the cat sat on the&quot; -&gt; &quot;rat&quot;.
+When predicting cat, we mask that row so &quot;the&quot; can only attend to itself, for &quot;the cat sat on the&quot;, we allow the latest &quot;the&quot; to attend to everything except rat.</p>
+<h2>The math</h2>
+<div class="math-display">\[Q, K, V \in \mathbb{R}^{T \times \frac{C}{\text{num heads}}}\]</div>
+<p>Attention Calculation:</p>
+<div class="math-display">\[A = \frac{QK^T}{\sqrt{\text{head size}}}\]</div>
+<div class="math-display">\[A \in \mathbb{R}^{T \times T}\]</div>
+<div class="math-display">\[\text{Attention}(Q, K, V) = \text{Softmax}\left(\frac{QK^T}{\sqrt{\text{head size}}}\right)V\]</div>
+<div class="math-display">\[\text{Attention}(Q, K, V) \in \mathbb{R}^{T \times \frac{C}{\text{num heads}}}\]</div>
+<p>Finally, we concat all these individual heads together, resulting in a <code>T x C</code> output, and then mix their results together using a projection matrix.</p>
+<h2>MLP</h2>
+<p>Why do we need an MLP in a transformer?</p>
+<p>The MLP allows for individual NONLINEAR transformation of our tokens.</p>
+<p>Our MLP is in <code>models.py</code>, and it uses a GELU nonlinearity.</p>
+<h2>The Transformer Block</h2>
+<p>The transformer block is composed of a layer normalization, self attention, another layer normalization, and our MLP.</p>
+<h2>The GPT Class</h2>
+<h3>GPTConfig</h3>
+<ul>
+<li>Block Size is the maximum context length of our model, set to 1024 tokens.</li>
+<li>Vocab Size is how many tokens our model can predict which is 50,257 tokens.</li>
+<li>n_layer is how many layers are in the transformer, which is 12</li>
+<li>n_head is how many attention heads we do per self attention calculation, which is 12</li>
+<li>n_embd is our transformers representation embedding, which is 768</li>
+</ul>
+<p>GPT class consists of our token embeddings, positional embeddings, our transformer blocks, and a classification head.</p>
+<p>Positional embeddings give our model information on the order of the input tokens, which it otherwise would not have.</p>
+<p>The classification head/language modeling head takes in <code>n_embd</code> dimension inputs and outputs logits over the <code>vocab_size</code>, and we do softmax to select the next most likely token for next token prediction.</p>
+<h2>Weight Tying</h2>
+<p>In our GPT class, we set:</p>
+<pre><code class="language-python">self.transformer.wte.weight = self.lm_head.weight
+</code></pre>
+<p>This means the token embedding matrix and the language modeling head share the same weights. The embedding matrix is used to convert token IDs into vectors, while the lm_head uses those same token vectors to predict which token should come next.</p>
+<p>This makes sense because both matrices represent tokens: one for reading tokens as input, and one for predicting tokens as output. If the model's hidden state is similar to a token's embedding, that token gets a higher logit.</p>
+<p>This also reduces the number of parameters the model has to learn.</p>
+<h2>Flash Attention</h2>
+<p>In <code>models.py</code>, the <code>CausalSelfAttention</code> class uses PyTorch's scaled dot-product attention:</p>
+<pre><code class="language-python">y = F.scaled_dot_product_attention(q, k, v, is_causal=True)
+</code></pre>
+<p>Flash Attention allows us perform attention computation much faster by avoiding creating the T x T attention matrix.</p>
+<h2>Learning Rate Scheduler</h2>
+<p>Our training run uses a <strong>Cosine Learning Rate Scheduler</strong>.</p>
+<p>In <code>trainer.py</code>, the <code>get_lr</code> function controls the learning rate over time. At the start of training, the learning rate increases linearly during warmup until it reaches <code>max_lr</code>.</p>
+<p>After warmup, the learning rate follows a cosine decay curve down to <code>min_lr</code>, which is set to 10% of the maximum learning rate.</p>
+<p>This gives training a gentler start, when the random initial weights are shaky and probably inaccurate, then slowly reduces the step size as the model gets closer to convergence.</p>
+</article>
+    <div class="article-end"><a href="https://github.com/AlexZhai21/DeepLearning_and_Transformers/tree/main/Chat%20GPT%202" target="_blank" rel="noopener noreferrer">GitHub repository <span aria-hidden="true">↗</span></a></div>
+    <a class="back-link bottom-back" href="../index.html#articles"><span aria-hidden="true">←</span> Back to all articles</a>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="container footer-inner"><span>Alex Zhai</span><a href="https://github.com/AlexZhai21" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a></div>
+  </footer>
+</body>
+</html>

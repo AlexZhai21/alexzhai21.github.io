@@ -1,3 +1,12 @@
+---
+title: Action Chunking Transformers
+short_title: Robot arm (ACT)
+date: 2026-08-20
+description: My robot control project using Action Chunking Transformers, with notes explaining how it works.
+github: https://github.com/AlexZhai21/ActionChunkingTransformers
+image: assets/robot-preview.webp
+math: true
+---
 # ACT EXPLAINED
 
 ![robosuite can demo raw replay frontview](outputs/can_demo_0.gif)

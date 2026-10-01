@@ -118,6 +118,7 @@ def project_card(project: dict[str, str]) -> str:
 def index_page(projects: list[dict[str, str]]) -> str:
     cards = "\n".join(project_card(project) for project in projects)
     about = MARKDOWN.render((ROOT / "content/about.md").read_text(encoding="utf-8"))
+    recommendation = (ROOT / "content/_recommendation.txt").read_text(encoding="utf-8").strip()
     body = f"""
   <section class="hero container" aria-labelledby="hero-title">
     <div class="hero-copy">
@@ -127,6 +128,18 @@ def index_page(projects: list[dict[str, str]]) -> str:
   <section class="section about-section container" id="about" aria-labelledby="about-title">
     <div class="section-heading"><h2 id="about-title">About me</h2></div>
     <div class="about-copy">{about}</div>
+  </section>
+  <section class="section recommendation-section container" id="recommendation" aria-labelledby="recommendation-title">
+    <div class="section-heading"><h2 id="recommendation-title">Recommendations</h2></div>
+    <figure class="recommendation-card">
+      <div class="recommendation-source">Received on LinkedIn <span aria-hidden="true">·</span> <time datetime="2026-08-26">August 26, 2026</time></div>
+      <blockquote><p>{escape(recommendation)}</p></blockquote>
+      <figcaption class="recommendation-attribution">
+        <span class="recommendation-avatar" aria-hidden="true">SL</span>
+        <span class="recommendation-person"><strong><a href="https://www.linkedin.com/in/siying-li-b87ba1159/" target="_blank" rel="noopener noreferrer">Siying Li <span aria-hidden="true">↗</span></a></strong><span>Data Scientist · Product Analytics · Statistical Analysis &amp; ML</span><span>Managed Alex directly</span></span>
+        <a href="https://www.linkedin.com/in/alexwzhai/" target="_blank" rel="noopener noreferrer">View on Alex's LinkedIn <span aria-hidden="true">↗</span></a>
+      </figcaption>
+    </figure>
   </section>
   <section class="section container" id="projects" aria-labelledby="projects-title">
     <div class="section-heading"><h2 id="projects-title">Recent</h2></div>

@@ -2,7 +2,7 @@
 title: Action Chunking Transformers
 short_title: Robot arm (ACT)
 date: 2026-08-20
-description: Robotic imitation learning using Action Chunking policy.
+description: Robotic imitation learning using Action Chunking policy built from scratch.
 github: https://github.com/AlexZhai21/ActionChunkingTransformers
 image: assets/robot-preview.webp
 math: true

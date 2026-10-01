@@ -75,7 +75,7 @@ def shell(*, title: str, description: str, body: str, prefix: str = "", math: bo
       <a class="wordmark" href="{prefix}index.html" aria-label="Alex Zhai, home">Alex Zhai</a>
       <nav aria-label="Main navigation">
         <a href="{prefix}index.html#about">About</a>
-        <a href="{prefix}index.html#projects">Work</a>
+        <a href="{prefix}index.html#projects">Recent</a>
         <a href="https://github.com/AlexZhai21" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
       </nav>
     </div>
@@ -110,7 +110,7 @@ def project_card(project: dict[str, str]) -> str:
       <h3><a href="{article}">{escape(project['short_title'])}</a></h3>
       <div class="project-date">{date_markup(project)}</div>
       <p>{escape(project['description'])}</p>
-      <div class="card-links"><a href="{article}">Read article <span aria-hidden="true">↗</span></a><a href="{project['github']}" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a></div>
+      <div class="card-links"><a href="{article}">Read more <span aria-hidden="true">↗</span></a><a href="{project['github']}" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a></div>
     </article>"""
 
 
@@ -128,11 +128,11 @@ def index_page(projects: list[dict[str, str]]) -> str:
     <div class="about-copy">{about}</div>
   </section>
   <section class="section container" id="projects" aria-labelledby="projects-title">
-    <div class="section-heading"><h2 id="projects-title">Selected Work</h2></div>
+    <div class="section-heading"><h2 id="projects-title">Recent</h2></div>
     <div class="project-grid">{cards}</div>
   </section>
   """
-    return shell(title="Selected Work", description="Selected work by Alex Zhai in robotics, machine learning, and image processing.", body=body)
+    return shell(title="Recent", description="Recent work by Alex Zhai in robotics, machine learning, and image processing.", body=body)
 
 
 def render_readme(source: str, *, math: bool) -> str:
@@ -207,12 +207,12 @@ def article_page(project: dict[str, str]) -> str:
         gallery = ""
     body = f"""
   <div class="article-shell container">
-    <a class="back-link" href="../index.html#projects"><span aria-hidden="true">←</span> Back to work</a>
+    <a class="back-link" href="../index.html#projects"><span aria-hidden="true">←</span> Back to Recent</a>
     <header class="article-header"><div class="article-date">{date_markup(project)}</div><h1>{escape(project['title'])}</h1><p class="article-deck">{escape(project['description'])}</p><div class="article-actions"><a class="button button-dark" href="{project['github']}" target="_blank" rel="noopener noreferrer">GitHub repository <span aria-hidden="true">↗</span></a></div></header>
     <div class="article-rule"></div>
     <article class="prose" aria-label="Project article">{demo}{rendered}{gallery}</article>
     <div class="article-end"><a href="{project['github']}" target="_blank" rel="noopener noreferrer">GitHub repository <span aria-hidden="true">↗</span></a></div>
-    <a class="back-link bottom-back" href="../index.html#projects"><span aria-hidden="true">←</span> Back to work</a>
+    <a class="back-link bottom-back" href="../index.html#projects"><span aria-hidden="true">←</span> Back to Recent</a>
   </div>{demo_script}
   """
     return shell(title=project["title"], description=project["description"], body=body, prefix="../", math=project.get("math") == "true")

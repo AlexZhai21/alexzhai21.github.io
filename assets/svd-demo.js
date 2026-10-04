@@ -1,5 +1,5 @@
 (() => {
-  const MAX_DIMENSION = 192;
+  const MAX_DIMENSION = 512;
   const upload = document.getElementById('svdUpload');
   const slider = document.getElementById('svdRank');
   const rankValue = document.getElementById('svdRankValue');
@@ -134,8 +134,11 @@
 
   function draw(state) {
     const rgba = state.imageData.data;
+    const pixels = state.currentRank === state.decomposition.columns
+      ? state.inputPixels
+      : state.accumulator;
     for (let i = 0; i < state.accumulator.length; i += 1) {
-      const value = Math.max(0, Math.min(255, Math.round(state.accumulator[i])));
+      const value = Math.max(0, Math.min(255, Math.round(pixels[i])));
       const offset = i * 4;
       rgba[offset] = value;
       rgba[offset + 1] = value;
@@ -200,6 +203,7 @@
         decomposition,
         context,
         imageData: context.createImageData(canvas.width, canvas.height),
+        inputPixels: input.pixels,
         accumulator: new Float64Array(canvas.width * canvas.height),
         currentRank: 0,
         pendingRank: 0,

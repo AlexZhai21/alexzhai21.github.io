@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import base64
 from datetime import date
+import hashlib
 from html import escape
 from pathlib import Path
 import re
@@ -194,7 +195,7 @@ def svd_demo() -> str:
         <figure><img id="svdOriginalImage" src="data:image/webp;base64,{sample_data}" alt="Grayscale image supplied to SVD"><figcaption>SVD input</figcaption></figure>
         <figure><canvas id="svdResultCanvas" role="img" aria-label="Low-rank approximation of the selected image">Your browser does not support canvas.</canvas><figcaption>Approximation</figcaption></figure>
       </div>
-      <p class="demo-note">Images are converted to grayscale and resized to at most 192 pixels on the long side for the browser demo. The left preview shows the exact pixels used by SVD. Uploaded images stay in your browser.</p>
+      <p class="demo-note">Images are converted to grayscale and resized to at most 512 pixels on the long side for the browser demo. The left preview shows the exact pixels used by SVD, so full rank matches it. Uploaded images stay in your browser.</p>
     </section>"""
 
 
@@ -210,7 +211,8 @@ def article_page(project: dict[str, str]) -> str:
     rendered = rendered.replace("<img ", '<img loading="lazy" decoding="async" ')
     if project["slug"] == "svd":
         demo = svd_demo()
-        demo_script = '<script defer src="../assets/svd-demo.js"></script>'
+        script_digest = hashlib.sha256((ROOT / "assets/svd-demo.js").read_bytes()).hexdigest()[:12]
+        demo_script = f'<script defer src="../assets/svd-demo.js?v={script_digest}"></script>'
         gallery = """<div class="example-block"><h2>Image examples</h2><p>The same image at different approximation ranks.</p>
           <div class="comparison-grid">
             <figure><img src="../assets/svd-original_grayscale.webp" alt="Original grayscale image of a dog in a field" loading="lazy" width="512" height="288"><figcaption>Original</figcaption></figure>

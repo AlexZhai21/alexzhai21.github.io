@@ -194,7 +194,7 @@ def svd_demo() -> str:
         <figure><img id="svdOriginalImage" src="data:image/webp;base64,{sample_data}" alt="Grayscale image supplied to SVD"><figcaption>SVD input</figcaption></figure>
         <figure><canvas id="svdResultCanvas" role="img" aria-label="Low-rank approximation of the selected image">Your browser does not support canvas.</canvas><figcaption>Approximation</figcaption></figure>
       </div>
-      <p class="demo-note">SVD uses the image's original pixel dimensions. The input preview shows the same grayscale pixels used by SVD. For browser performance, use images up to 512 pixels on the long side and 288 on the short side. Uploaded images stay in your browser.</p>
+      <p class="demo-note">Images are converted to grayscale and resized to at most 192 pixels on the long side for the browser demo. The left preview shows the exact pixels used by SVD. Uploaded images stay in your browser.</p>
     </section>"""
 
 

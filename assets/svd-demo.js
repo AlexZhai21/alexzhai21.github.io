@@ -1,6 +1,5 @@
 (() => {
-  const MAX_LONG_SIDE = 512;
-  const MAX_SHORT_SIDE = 288;
+  const MAX_DIMENSION = 192;
   const upload = document.getElementById('svdUpload');
   const slider = document.getElementById('svdRank');
   const rankValue = document.getElementById('svdRankValue');
@@ -16,11 +15,9 @@
   const nextFrame = () => new Promise(resolve => setTimeout(resolve, 0));
 
   function grayscalePixels(image) {
-    const width = image.naturalWidth;
-    const height = image.naturalHeight;
-    if (Math.max(width, height) > MAX_LONG_SIDE || Math.min(width, height) > MAX_SHORT_SIDE) {
-      throw new RangeError('Image is too large for the browser SVD demo.');
-    }
+    const scale = Math.min(1, MAX_DIMENSION / Math.max(image.naturalWidth, image.naturalHeight));
+    const width = Math.max(1, Math.round(image.naturalWidth * scale));
+    const height = Math.max(1, Math.round(image.naturalHeight * scale));
     const sourceCanvas = document.createElement('canvas');
     sourceCanvas.width = width;
     sourceCanvas.height = height;
@@ -214,9 +211,7 @@
       status.textContent = 'Drag the rank slider to change the image.';
       setRank(Number(slider.value));
     } catch (error) {
-      if (job === activeJob) status.textContent = error instanceof RangeError
-        ? 'Use an image up to 512 pixels on its long side and 288 pixels on its short side.'
-        : 'Could not read that image. Try a PNG, JPEG, or WebP file.';
+      if (job === activeJob) status.textContent = 'Could not read that image. Try a PNG, JPEG, or WebP file.';
     }
   }
 

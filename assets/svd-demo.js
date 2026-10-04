@@ -1,5 +1,6 @@
 (() => {
-  const MAX_DIMENSION = 192;
+  const MAX_LONG_SIDE = 512;
+  const MAX_SHORT_SIDE = 288;
   const upload = document.getElementById('svdUpload');
   const slider = document.getElementById('svdRank');
   const rankValue = document.getElementById('svdRankValue');
@@ -15,9 +16,11 @@
   const nextFrame = () => new Promise(resolve => setTimeout(resolve, 0));
 
   function grayscalePixels(image) {
-    const scale = Math.min(1, MAX_DIMENSION / Math.max(image.naturalWidth, image.naturalHeight));
-    const width = Math.max(1, Math.round(image.naturalWidth * scale));
-    const height = Math.max(1, Math.round(image.naturalHeight * scale));
+    const width = image.naturalWidth;
+    const height = image.naturalHeight;
+    if (Math.max(width, height) > MAX_LONG_SIDE || Math.min(width, height) > MAX_SHORT_SIDE) {
+      throw new RangeError('Image is too large for the browser SVD demo.');
+    }
     const sourceCanvas = document.createElement('canvas');
     sourceCanvas.width = width;
     sourceCanvas.height = height;
@@ -25,19 +28,25 @@
     context.fillStyle = '#fff';
     context.fillRect(0, 0, width, height);
     context.drawImage(image, 0, 0, width, height);
-    const rgba = context.getImageData(0, 0, width, height).data;
+    const imageData = context.getImageData(0, 0, width, height);
+    const rgba = imageData.data;
     const pixels = new Float64Array(width * height);
     for (let i = 0; i < pixels.length; i += 1) {
       const offset = i * 4;
-      pixels[i] = 0.299 * rgba[offset] + 0.587 * rgba[offset + 1] + 0.114 * rgba[offset + 2];
+      const value = Math.round(0.299 * rgba[offset] + 0.587 * rgba[offset + 1] + 0.114 * rgba[offset + 2]);
+      pixels[i] = value;
+      rgba[offset] = value;
+      rgba[offset + 1] = value;
+      rgba[offset + 2] = value;
+      rgba[offset + 3] = 255;
     }
-    return { pixels, width, height };
+    context.putImageData(imageData, 0, 0);
+    return { pixels, width, height, preview: sourceCanvas.toDataURL('image/png') };
   }
 
   // One-sided Jacobi SVD: rotate image columns until they are orthogonal.
   // A = B V^T, so each approximation adds one sorted column of B V^T.
-  async function decompose(image, job) {
-    const { pixels, width, height } = grayscalePixels(image);
+  async function decompose({ pixels, width, height }, job) {
     const transposed = width > height;
     const rows = transposed ? width : height;
     const columns = transposed ? height : width;
@@ -91,6 +100,10 @@
             v[offset + q] = sine * vp + cosine * vq;
           }
           rotations += 1;
+        }
+        if ((p & 7) === 7) {
+          if (job !== activeJob) return null;
+          await nextFrame();
         }
       }
       if (job !== activeJob) return null;
@@ -175,9 +188,11 @@
     try {
       await original.decode();
       if (job !== activeJob) return;
+      const input = grayscalePixels(original);
+      original.src = input.preview;
       status.textContent = 'Computing the approximation…';
       await nextFrame();
-      const decomposition = await decompose(original, job);
+      const decomposition = await decompose(input, job);
       if (!decomposition || job !== activeJob) return;
 
       canvas.width = decomposition.width;
@@ -199,7 +214,9 @@
       status.textContent = 'Drag the rank slider to change the image.';
       setRank(Number(slider.value));
     } catch (error) {
-      if (job === activeJob) status.textContent = 'Could not read that image. Try a PNG, JPEG, or WebP file.';
+      if (job === activeJob) status.textContent = error instanceof RangeError
+        ? 'Use an image up to 512 pixels on its long side and 288 pixels on its short side.'
+        : 'Could not read that image. Try a PNG, JPEG, or WebP file.';
     }
   }
 

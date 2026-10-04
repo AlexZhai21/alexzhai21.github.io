@@ -94,8 +94,8 @@ def project_card(project: dict[str, str]) -> str:
     article = f"articles/{project['slug']}.html"
     if project["slug"] == "svd":
         visual = """<div class="project-visual svd-visual" aria-label="An image before and after lower rank approximation">
-          <img src="assets/svd-original_grayscale.webp" alt="Original grayscale photo of a dog in a field" loading="lazy" width="512" height="256">
-          <img src="assets/svd-rank_10.webp" alt="The same photo approximated at rank 10" loading="lazy" width="512" height="256">
+          <img src="assets/svd-original_grayscale.webp" alt="Original grayscale photo of a dog in a field" loading="lazy" width="512" height="288">
+          <img src="assets/svd-rank_10.webp" alt="The same photo approximated at rank 10" loading="lazy" width="512" height="288">
         </div>"""
     elif project.get("image"):
         visual_class = "logo-visual" if project["slug"] == "gpt-2" else "robot-visual"
@@ -191,10 +191,10 @@ def svd_demo() -> str:
         <p id="svdStatus" class="demo-status" role="status" aria-live="polite">Preparing the example image…</p>
       </div>
       <div class="demo-images">
-        <figure><img id="svdOriginalImage" src="data:image/webp;base64,{sample_data}" alt="Original example image of a dog in a field"><figcaption>Original</figcaption></figure>
+        <figure><img id="svdOriginalImage" src="data:image/webp;base64,{sample_data}" alt="Grayscale image supplied to SVD"><figcaption>SVD input</figcaption></figure>
         <figure><canvas id="svdResultCanvas" role="img" aria-label="Low-rank approximation of the selected image">Your browser does not support canvas.</canvas><figcaption>Approximation</figcaption></figure>
       </div>
-      <p class="demo-note">The preview is converted to grayscale and resized to at most 192 pixels. Uploaded images stay in your browser.</p>
+      <p class="demo-note">SVD uses the image's original pixel dimensions. The input preview shows the same grayscale pixels used by SVD. For browser performance, use images up to 512 pixels on the long side and 288 on the short side. Uploaded images stay in your browser.</p>
     </section>"""
 
 
@@ -213,9 +213,9 @@ def article_page(project: dict[str, str]) -> str:
         demo_script = '<script defer src="../assets/svd-demo.js"></script>'
         gallery = """<div class="example-block"><h2>Image examples</h2><p>The same image at different approximation ranks.</p>
           <div class="comparison-grid">
-            <figure><img src="../assets/svd-original_grayscale.webp" alt="Original grayscale image of a dog in a field" loading="lazy" width="512" height="256"><figcaption>Original</figcaption></figure>
-            <figure><img src="../assets/svd-rank_10.webp" alt="Rank 10 approximation of the same image" loading="lazy" width="512" height="256"><figcaption>Rank 10</figcaption></figure>
-            <figure><img src="../assets/svd-rank_25.webp" alt="Rank 25 approximation of the same image" loading="lazy" width="512" height="256"><figcaption>Rank 25</figcaption></figure>
+            <figure><img src="../assets/svd-original_grayscale.webp" alt="Original grayscale image of a dog in a field" loading="lazy" width="512" height="288"><figcaption>Original</figcaption></figure>
+            <figure><img src="../assets/svd-rank_10.webp" alt="Rank 10 approximation of the same image" loading="lazy" width="512" height="288"><figcaption>Rank 10</figcaption></figure>
+            <figure><img src="../assets/svd-rank_25.webp" alt="Rank 25 approximation of the same image" loading="lazy" width="512" height="288"><figcaption>Rank 25</figcaption></figure>
           </div>
         </div>"""
     else:
